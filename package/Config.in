@@ -885,6 +885,7 @@ menu "Hardware handling"
 endmenu
 
 menu "Javascript"
+
 	source "package/angularjs/Config.in"
 	source "package/bootstrap/Config.in"
 	source "package/explorercanvas/Config.in"
@@ -1171,6 +1172,7 @@ menu "Miscellaneous"
 endmenu
 
 menu "Networking applications"
+	source "package/adminer/Config.in"
 	source "package/aiccu/Config.in"
 	source "package/aircrack-ng/Config.in"
 	source "package/apache/Config.in"
