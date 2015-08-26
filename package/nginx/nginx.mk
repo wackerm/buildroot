@@ -15,7 +15,7 @@ NGINX_CONF_OPTS = \
 	--with-cpp="$(TARGET_CC)" \
 	--with-cc-opt="$(TARGET_CFLAGS)" \
 	--with-ld-opt="$(TARGET_LDFLAGS)" \
-	--with-ipv6
+	--with-debug
 
 # www-data user and group are used for nginx. Because these user and group
 # are already set by buildroot, it is not necessary to redefine them.
@@ -58,10 +58,7 @@ NGINX_CONF_OPTS += \
 	--error-log-path=/var/log/nginx/error.log \
 	--http-log-path=/var/log/nginx/access.log \
 	--http-client-body-temp-path=/var/tmp/nginx/client-body \
-	--http-proxy-temp-path=/var/tmp/nginx/proxy \
-	--http-fastcgi-temp-path=/var/tmp/nginx/fastcgi \
-	--http-scgi-temp-path=/var/tmp/nginx/scgi \
-	--http-uwsgi-temp-path=/var/tmp/nginx/uwsgi
+	--http-proxy-temp-path=/var/tmp/nginx/proxy
 
 NGINX_CONF_OPTS += \
 	$(if $(BR2_PACKAGE_NGINX_FILE_AIO),--with-file-aio)
@@ -175,9 +172,9 @@ NGINX_CONF_OPTS += \
 	$(if $(BR2_PACKAGE_NGINX_HTTP_SPLIT_CLIENTS_MODULE),,--without-http_split_clients_module) \
 	$(if $(BR2_PACKAGE_NGINX_HTTP_REFERER_MODULE),,--without-http_referer_module) \
 	$(if $(BR2_PACKAGE_NGINX_HTTP_PROXY_MODULE),,--without-http_proxy_module) \
-	$(if $(BR2_PACKAGE_NGINX_HTTP_FASTCGI_MODULE),,--without-http_fastcgi_module) \
-	$(if $(BR2_PACKAGE_NGINX_HTTP_UWSGI_MODULE),,--without-http_uwsgi_module) \
-	$(if $(BR2_PACKAGE_NGINX_HTTP_SCGI_MODULE),,--without-http_scgi_module) \
+	$(if $(BR2_PACKAGE_NGINX_HTTP_FASTCGI_MODULE),--http-fastcgi-temp-path=/var/tmp/nginx/fastcgi,--without-http_fastcgi_module) \
+	$(if $(BR2_PACKAGE_NGINX_HTTP_SCGI_MODULE),--http-scgi-temp-path=/var/tmp/nginx/scgi,--without-http_scgi_module) \
+	$(if $(BR2_PACKAGE_NGINX_HTTP_UWSGI_MODULE),--http-uwsgi-temp-path=/var/tmp/nginx/uwsgi,--without-http_uwsgi_module) \
 	$(if $(BR2_PACKAGE_NGINX_HTTP_MEMCACHED_MODULE),,--without-http_memcached_module) \
 	$(if $(BR2_PACKAGE_NGINX_HTTP_LIMIT_CONN_MODULE),,--without-http_limit_conn_module) \
 	$(if $(BR2_PACKAGE_NGINX_HTTP_LIMIT_REQ_MODULE),,--without-http_limit_req_module) \
