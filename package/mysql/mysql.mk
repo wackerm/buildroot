@@ -32,6 +32,12 @@ MYSQL_CONF_OPTS = \
 	--with-low-memory \
 	--enable-thread-safe-client \
 	--disable-mysql-maintainer-mode
+	--without-bench \
+	--without-geometry \
+	--without-extra-tools \
+	--with-charset=utf8 \
+	--with-collation=utf8_general_ci
+
 
 ifeq ($(BR2_PACKAGE_OPENSSL),y)
 MYSQL_DEPENDENCIES += openssl
@@ -125,8 +131,14 @@ define MYSQL_ADD_MYSQL_LIB_PATH
 	echo "/usr/lib/mysql" >> $(TARGET_DIR)/etc/ld.so.conf
 endef
 
+#PHP-FPM needs this symlink to be able to find the lib
+define MYSQL_ADD_MYSQL_LIB_SYMLINK
+	ln -s /usr/lib/mysql/libmysqlclient.so.16 /usr/lib/libmysqlclient.so.16
+endef
+
 MYSQL_POST_INSTALL_TARGET_HOOKS += MYSQL_REMOVE_TEST_PROGS
 MYSQL_POST_INSTALL_TARGET_HOOKS += MYSQL_ADD_MYSQL_LIB_PATH
+MYSQL_POST_INSTALL_TARGET_HOOKS += MYSQL_ADD_MYSQL_LIB_SYMLINK
 
 $(eval $(autotools-package))
 $(eval $(host-autotools-package))
