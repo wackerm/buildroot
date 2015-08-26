@@ -2,7 +2,7 @@ menu "System configuration"
 
 config BR2_TARGET_GENERIC_HOSTNAME
 	string "System hostname"
-	default "buildroot"
+	default "raspberrypi"
 	help
 	  Select system hostname to be stored in /etc/hostname.
 
@@ -11,7 +11,7 @@ config BR2_TARGET_GENERIC_HOSTNAME
 
 config BR2_TARGET_GENERIC_ISSUE
 	string "System banner"
-	default "Welcome to Buildroot"
+	default "Welcome to Raspberry Pi"
 	help
 	  Select system banner (/etc/issue) to be displayed at login.
 
